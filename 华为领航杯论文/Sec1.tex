@@ -1,0 +1,26 @@
+\section{问题背景阐述}
+
+\subsection{有限脉脉冲响应滤波器(Finite Impulse Response Filter, FIR Filter)}
+
+工程上进行
+FIR 滤波器(FIR Filter,以下简称FIR或FIR滤波器)是非递归型滤波器的简称，全称是有限长单位脉冲响应滤波器
+(Finite Response Filter)。
+
+其中带有常数系数的
+如下图
+
+
+
+
+\subsection{离散傅立叶变换(Discrete Fourier Transformatioin, DFT)}
+
+
+\subsection{快速傅立叶变换(Fast Fourier Transformatioin, FFT)}
+
+如果采用上述一般形式的离散 Fourier 变换公式在硬件上进行运算，那么完成一次完整的 DFT 需要进行
+$\O (n^2)$ 次乘法和 $\O(n^2)$ 次加法。其中 $n$ 代表 DFT 变换器的阶数(或者滤波器的抽头数)
+
+在20世纪60年代，来自 Princeton 的计算机科学家 Cooley 和数学家 Tukey 发明了一种基于快速幂算法和 Gauss 和算术性质
+的快速离散 Fourier 算法。其可以通过数量级地减少 DFT 算法中的乘法次数
+大大加快原有离散 Fourier 变换的运算速度。本质上这一算法的理论框架已经被德国数学家 Carl Friedrich Gauss 于 19世纪初
+发现并证明，参见。

@@ -1,0 +1,9 @@
+@book{Lee2012,
+  author    = {John M. Lee},
+  publisher = {Springer New York},
+  title     = {Introduction to Smooth Manifolds},
+  year      = {2012},
+  doi       = {10.1007/978-1-4419-9982-5}
+}
+
+@Comment{jabref-meta: databaseType:bibtex;}
