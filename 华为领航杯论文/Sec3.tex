@@ -1,10 +1,22 @@
 \section{理论及算法}
 
-\subsection{FFT 的 Cooley-Tukey 算法(Cooley-Tukey Algorithms)}
+\subsection{离散傅立叶变换(Discrete Fourier Transformatioin, FFT) 的快速实现}
 
+快速傅立叶变换(通常只是至离散情形的)
 以下内容参考wikipedia 。如
 
-\subsection{线性规划的单纯形算法(Simplex Alogrithms)}
+
+
+第一种办法：Wingoard 加速算法(Wingoard Fourier Transformation,WFT)
+
+第二种办法：Cooley-Tukey 算法(Cooley-Tukey Algorithms)
+
+此方式适用于 $n= 2^m$ 时，这里的实现方式主要参考了算法导论一书的 FFT 章节见 \cite[Polynomials and FFT]{Cormen2022}
+
+另外更加高效的办法是参考 \cite{Li2010}。或者关于快速傅立叶变换的综述性质书籍\cite{Nussbaumer1982}。
+
+第三种办法
+\subsection{乘法器加速的 Booth 算法(Booth Multiplication Algorithms)}
 
 
 \subsection{量化感知中的混合精度量化(Mixed Precision Quantization)}

@@ -12,10 +12,7 @@ FIR 滤波器(FIR Filter,以下简称FIR或FIR滤波器)是非递归型滤波器
 
 
 
-\subsection{离散傅立叶变换(Discrete Fourier Transformatioin, DFT)}
-
-
-\subsection{快速傅立叶变换(Fast Fourier Transformatioin, FFT)}
+\subsection{离散傅立叶变换及快速实现(Discrete/Fast Fourier Transformatioin, DFT/FFT)}
 
 如果采用上述一般形式的离散 Fourier 变换公式在硬件上进行运算，那么完成一次完整的 DFT 需要进行
 $\O (n^2)$ 次乘法和 $\O(n^2)$ 次加法。其中 $n$ 代表 DFT 变换器的阶数(或者滤波器的抽头数)
@@ -24,3 +21,10 @@ $\O (n^2)$ 次乘法和 $\O(n^2)$ 次加法。其中 $n$ 代表 DFT 变换器的
 的快速离散 Fourier 算法。其可以通过数量级地减少 DFT 算法中的乘法次数
 大大加快原有离散 Fourier 变换的运算速度。本质上这一算法的理论框架已经被德国数学家 Carl Friedrich Gauss 于 19世纪初
 发现并证明，参见。
+
+\subsection{滤波器算法中的乘法器性能}
+
+
+\subsection{技术诉求}
+
+
