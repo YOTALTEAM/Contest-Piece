@@ -1,32 +1,210 @@
-\section*{附录}
+\section*{\heiti{附录}}
 
-\phantomsection
-\addcontentsline{toc}{section}{附录}
+这是附录文件。这是附录文件。这是附录文件。这是附录文件。这是附录文件。
+这是附录文件。这是附录文件。这是附录文件。这是附录文件。这是附录文件。这是附录文件。
+这是附录文件。这是附录文件。这是附录文件。这是附录文件。这是附录文件。这是附录文件。
+这是附录文件。这是附录文件。这是附录文件。这是附录文件。这是附录文件。这是附录文件。
+这是附录文件。这是附录文件。这是附录文件。这是附录文件。这是附录文件。这是附录文件。
+这是附录文件。这是附录文件。这是附录文件。这是附录文件。这是附录文件。这是附录文件。
 
-这是附录文件。
+\subsection{\heiti{源程序文件树}}
+全工程文件树如下图所示
 
-\subsection{源程序文件树}
+\begin{center}
+    \begin{forest}
+        for tree={
+          font=\ttfamily,
+          grow'=0,
+          child anchor=west,
+          parent anchor=south,
+          anchor=west,
+          calign=first,
+          edge path={
+            \noexpand\path [draw, \forestoption{edge}]
+            (!u.south west) +(7.5pt,0) |- node[fill,inner sep=1.25pt] {} (.child anchor)\forestoption{edge label};
+          },
+          before typesetting nodes={
+            if n=1
+              {insert before={[,phantom]}}
+              {}
+          },
+          fit=band,
+          before computing xy={l=15pt},
+        }
+      [HUAWEI\_FIR
+        [ACFIR
+          [...]
+        ]
+        [MLPyPlugin
+          [...]
+        ]
+        [VDHL
+          [...]
+        ]
+        [etc]
+      ]
+    \end{forest}    
+\end{center}
+
+其中 ACFIR 文件夹是可运行在硬件或仿真系统上的 FIR 滤波算法源代码； MLPyPlugin 文件夹是优化滤波器性能的机器学习
+ Python 代码文件；VDHL 是用于仿真模拟或硬件测试的硬件描述语言源代码。``etc''表示其他诸如测试数据，日志文件，
+编译软件生成文件等附加的文件。``...''表示文件夹中存在的没有列举出的文件。
+
+关于本论文和后续汇报的幻灯片文件将在 GitHub 团队 \href{github.com/YOTALTEAM}{地址}
+上的 Contest-Piece 仓库中的``华为领航杯论文''文件夹中发布。由于自身嵌套问题此文件恕不在附录的源程序文件解释部分解释，
+也于文件树上省略此文件夹。
+
+同时此比赛的一切源代码均发布到指定邮箱。
 
 $>>>$ 此处添加ACFIR文件树
 
 
+\begin{center}
+    \begin{forest}
+        for tree={
+          font=\ttfamily,
+          grow'=0,
+          child anchor=west,
+          parent anchor=south,
+          anchor=west,
+          calign=first,
+          edge path={
+            \noexpand\path [draw, \forestoption{edge}]
+            (!u.south west) +(7.5pt,0) |- node[fill,inner sep=1.25pt] {} (.child anchor)\forestoption{edge label};
+          },
+          before typesetting nodes={
+            if n=1
+              {insert before={[,phantom]}}
+              {}
+          },
+          fit=band,
+          before computing xy={l=15pt},
+        }
+      [ACFIR
+        [benchmark.h]
+        [benchmark.cpp]
+        [...]
+      ]
+    \end{forest}    
+\end{center}
+
+程序解答
+
+\paragraph{transformation.h}
+
+这是表示引用文件。
+
+\begin{lstlisting}[language=java]
+    class HelloWorldApp {
+        public static void main(String[] args) {
+            System.out.println("Hello World!"); // Display the string.
+            for (int i = 0; i < 100; ++i) {
+                System.out.println(i);
+            }
+        }
+    }
+\end{lstlisting}
+    
 
 $>>>$ 此处添加Python机器学习框架文件库
 
-
+\begin{center}
+    \begin{forest}
+        for tree={
+          font=\ttfamily,
+          grow'=0,
+          child anchor=west,
+          parent anchor=south,
+          anchor=west,
+          calign=first,
+          edge path={
+            \noexpand\path [draw, \forestoption{edge}]
+            (!u.south west) +(7.5pt,0) |- node[fill,inner sep=1.25pt] {} (.child anchor)\forestoption{edge label};
+          },
+          before typesetting nodes={
+            if n=1
+              {insert before={[,phantom]}}
+              {}
+          },
+          fit=band,
+          before computing xy={l=15pt},
+        }
+      [MLPyPlugin
+        [data\_config.py]
+        [torch\_config.py]
+        [run\_strategy.wheel]
+        [...]
+      ]
+    \end{forest}
+\end{center}
 
 $>>>$ 其他
 
+程序解读
+
 \subsubsection{滤波器代码注解}
 
+下面的 C++ 函数实现了滤波器的基准测试功能。
+
+使用信号处理的名字空间
+
+\paragraph{convolution.cpp}
+
+\begin{center}
+    \begin{lstlisting}[language=C++]
+        #include "convolution.h"
+    
+        namespace dsplib{
+            namespace conv{
+                vfp fir_regular(const vfp& seq, const vfp& tap) {
+                    int slen = seq.size();
+                    int tlen = tap.size();
+                    int olen = slen + tlen - 1;
+                    vfp vo(olen);
+                    for(int i = 0; i < olen; i++) {
+                        vo[i] = 0;
+                        for(int t = 0; t <= i; t++) {
+                            if((t < tlen) && ((i - t) < slen))
+                                vo[i] += tap[t] * seq[i - t];
+                        }
+                    }
+                    return vo;
+                };
+            }
+        }
+    \end{lstlisting}    
+\end{center}
+其中等等。
 
 \subsubsection{机器学习框架代码注解}
 
+此时使用 torch 包对滤波器参数选择进行神经网络优化。参考
+
+\begin{center}
+    \begin{lstlisting}[language=python]
+        from __future__ import division
+        import gym
+        import numpy as np
+        import torch
+        from torch.autograd import Variable
+        import os
+        import psutil
+        import gc
+        import random
+        import train
+        import buffer
+        import matplotlib.pyplot as plt
+        import pandas as pd
+        from tqdm import tqdm
+        import sys
+    \end{lstlisting}
+\end{center}
 
 \subsubsection{可视化框架注解}
 
+这里使用
 
-\subsection{使用指南}
+\subsection{\heiti{使用指南}}
 
 
 \subsubsection{操作系统和软件要求}
@@ -41,3 +219,6 @@ $>>>$ run xxx.exe
 
 
 StepA,  StepB,      .....   C ....
+
+\phantomsection
+\addcontentsline{toc}{section}{\heiti{附录}}

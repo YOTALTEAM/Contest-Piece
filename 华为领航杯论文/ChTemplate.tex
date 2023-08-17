@@ -13,7 +13,8 @@
 
 
 %%% 字体设置 %%%
-\usepackage{fontspec}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}  % for \textquotesingle macro
 % 英文等宽字体
 % \setmonofont{Fantasque Sans Mono}
 \usepackage{xeCJK}
@@ -23,7 +24,7 @@
 % \setCJKmainfont{方正书宋_GBK}
 % \setCJKsansfont{方正书宋_GBK}
 % 只有方正字体支持CJK脚本(CJK Script)
-\setCJKfamilyfont{zhhei}{simhei.ttf}
+\setCJKfamilyfont{zhhei}{simhei.ttf}[BoldFont=simhei.ttf, ItalicFont=fantasquesansmono-bolditalic.otf]
 \setCJKfamilyfont{zhyou}{FZY1K.TTF}[BoldFont=FZY1K.TTF, ItalicFont=FZY3K.TTF]
 \setCJKfamilyfont{方正楷体}{FZKTJW.TTF}
 % 由于为了使用上述CJK宏的主要字族/无衬线字族/有衬线字族
@@ -34,12 +35,16 @@
 \newcommand{\youyuan}[1]{{\CJKfamily{zhyou}{#1}}}
 
 %%% 链接设置
-\usepackage{xcolor}
 % 定义颜色
+\usepackage{xcolor}
 \definecolor{DarkRed}{RGB}{139,0,0}
 \definecolor{DimGrey}{RGB}{105 105 105}
+\definecolor{ShallowGray}{RGB}{220, 220, 220}
+\definecolor{CommentGreen}{RGB}{0, 255, 0}
+\definecolor{KeyMauve}{RGB}{204, 153, 255}
 \definecolor{thmcolor}{RGB}{241, 241, 255}
 \definecolor{defcolor}{RGB}{100, 149, 237}
+% 超链接设置
 \usepackage[
     colorlinks=true,
     linkcolor=DarkRed,
@@ -106,23 +111,45 @@
 \newtcolorbox{claim}{colframe = blue!75!black}
 
 % 引用结论
-\renewenvironment{quote}[1]
+\renewenvironment{quote}
 {\begin{notebox}{gray}
-      \textcolor{gray}{ \CJKfamily{zhhei}{\textbullet\, \CJKfamily{zhhei}{#1}\,\textbullet}}
+      \textcolor{gray}{ \CJKfamily{zhhei}{\textbullet}}
 }
 {\end{notebox}}
 
 %%% 参考文献配置
 \usepackage[backend=biber,backref=true,bibstyle=draft,citestyle=ext-authoryear]{biblatex}
-% \usepackage{csquotes}
 \DeclareOuterCiteDelims{cite}{\bibopenbracket}{\bibclosebracket}
-\AtEveryCite{\color{blue}}
+\AtEveryCite{\color{blue}}      %   蓝色引用文字
 \addbibresource{ChTemplateRef.bib}
 
 
 
 %%% 命令简化
 \renewcommand{\O}{\mathcal{O}}
+\renewcommand{\contentsname}{\heiti{论文目录}}  %   重新设置目录标题
+
+
+
+%%% 文件树呈现
+\usepackage{forest}
+
+
+
+%%% 代码解释
+\usepackage{listings}
+\lstset{ %
+  backgroundcolor=\color{ShallowGray},      % choose the background color
+  basicstyle=\footnotesize,                 % size of fonts used for the code
+  breaklines=true,                          % automatic line breaking only at whitespace
+  captionpos=b,                             % sets the caption-position to bottom
+  commentstyle=\color{CommentGreen},        % comment style
+%   escapeinside={\%*}{*)},                 % if you want to add LaTeX within your code
+  keywordstyle=\color{blue},                % keyword style
+  stringstyle=\color{KeyMauve},             % string literal style
+  frame=single,
+  numbers=left,
+}
 
 
 
@@ -264,8 +291,8 @@ Wang Xiyuan in SMS,Fudan University}} % Your department's name and URL, this is 
 
 \newpage
 \phantomsection
-\addcontentsline{toc}{section}{参考文献}
-\printbibliography[title={参考文献}]
+\addcontentsline{toc}{section}{\heiti{参考文献}}
+\printbibliography[title={\heiti{参考文献}}]
 
 
 \end{document}

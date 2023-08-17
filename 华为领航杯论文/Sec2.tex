@@ -1,11 +1,10 @@
-\section{经典方法复现}
+\section{\heiti{经典方法复现}}
 
-\subsection{基于 Cooley-Tukey FFT 算法实现的 FIR 滤波器}
+\subsection{\heiti{基于 Cooley-Tukey FFT 算法实现的 FIR 滤波器}}
 
 具体理论可参考维基百科。
 
-
-\subsection{冗余计算和 Booth 乘法}
+\subsection{\heiti{冗余计算和 Booth 乘法}}
 
 Booth 乘法器的原生算法可以在保持设定精度的前提下显著地提升滤波器中乘法器的性能。这里简要介绍 Booth 乘法的实现方法。
 
@@ -17,7 +16,7 @@ Booth 乘法器的原生算法可以在保持设定精度的前提下显著地�
 
 分布合适数量的乘法器
 
-\subsection{基于量化感知的自适应加速}
+\subsection{\heiti{基于量化感知的自适应加速}}
 
 针对于
 由于在全精度滤波器中乘法器进行的是浮点运算
@@ -32,3 +31,4 @@ Booth 乘法器的原生算法可以在保持设定精度的前提下显著地�
 
 而使用非前向直接估计器。
 
+有关于自适应滤波器 FIR 滤波器

@@ -1,6 +1,6 @@
-\section{理论及算法}
+\section{\heiti{理论及算法}}
 
-\subsection{离散傅立叶变换(Discrete Fourier Transformatioin, FFT) 的快速实现}
+\subsection{\heiti{离散傅立叶变换(Discrete Fourier Transformatioin, FFT) 的快速实现}}
 
 快速傅立叶变换(通常只是至离散情形的)
 以下内容参考wikipedia 。如
@@ -16,9 +16,89 @@
 另外更加高效的办法是参考 \cite{Li2010}。或者关于快速傅立叶变换的综述性质书籍\cite{Nussbaumer1982}。
 
 第三种办法
-\subsection{乘法器加速的 Booth 算法(Booth Multiplication Algorithms)}
 
+\subsection{\heiti{乘法器加速的 Booth 算法(Booth Multiplication Algorithms)}}
 
-\subsection{量化感知中的混合精度量化(Mixed Precision Quantization)}
+Karatsuba 算法
 
+以下对于高精度大整数乘法的 Karatsuba 算法简介摘录自 \href{https://oi-wiki.org/math/bignum/#karatsuba-%E4%B9%98%E6%B3%95}{OI Wiki:Karatsuba Algorithm}。
 
+如果取高精度数字(必要时同时约化为大整数)的位数为 $n$，那么高精度—高精度竖式乘法需要花费 $\O(n^2)$ 的时间。
+本节介绍一个时间复杂度更为优秀的算法，由前苏联（俄罗斯）数学家 Anatoly Karatsuba 提出，是一种分治算法。
+
+考虑两个十进制大整数 $x$ 和 $y$，均包含 $n$ 个数码并可以有前导零。任取 $0 < m < n$，记
+\begin{eqnarray*}
+    \begin{aligned}
+        x &= x_1 \cdot 10^m + x_0, \\
+        y &= y_1 \cdot 10^m + y_0, \\
+        x \cdot y &= z_2 \cdot 10^{2m} + z_1 \cdot 10^m + z_0,
+    \end{aligned}
+\end{eqnarray*}
+其中 $x_0,y_0,z_0,z_1 < 10^m$。简单四则运算可得
+\begin{eqnarray*}
+    \begin{aligned}
+        z_2 &= x_1 \cdot y_1, \\
+        z_1 &= x_1 \cdot y_0 + x_0 \cdot y_1, \\
+        z_0 &= x_0 \cdot y_0.
+    \end{aligned}    
+\end{eqnarray*}
+继续观察(本质上使用分配律或 Wingoard 加速算法)将
+\begin{eqnarray*}
+    z_1 = (x_1 + x_0)(y_1 + y_0) - z_2 - z_0
+\end{eqnarray*}
+从而只要计算出 $(x_1+x_0), (y_1 + y_0)$ 再与 $z_2,z_0$ 相减即可求出 $z_1$
+
+因为普遍讲计算机上乘法的耗时要大于甚至远大于加法(尤其是数位越大的时候)。从而将乘法替换为
+加法会大大降低算法的渐进时间复杂度。
+
+上式实际上是 Karatsuba 算法的核心，
+它将长度为 $n$ 
+的乘法问题转化为了 3 个长度更小的子问题。
+若令 
+\begin{eqnarray*}
+    m = \left\lceil \dfrac n 2 \right\rceil
+\end{eqnarray*} 
+记 Karatsuba 算法计算两个 $n$ 位整数乘法的耗时
+为 $T(n)$，则有 
+\begin{eqnarray*}
+    T(n) = 3 \cdot T \left(\left\lceil \dfrac n 2 \right\rceil\right) + \O(n)
+\end{eqnarray*}
+由主定理可得 
+\begin{eqnarray*}
+    T(n) = \O (n^{\log_2 3}) \approx \O (n^{1.585})
+\end{eqnarray*}
+这相比于通常的大整数乘法的 $\O (n^2)$ 有数量级的减少。也回答了 20世纪 60年代 Kolmogorov 关于大整数乘法渐进时间复杂度是否
+为 $\Omega(n^2) \approx \O (n^2)$ 的重大问题。
+
+而 Anatoly Karatsuba 发明这个算法时年仅 23 岁，仅仅是在 Kolmogorov 陈述他关于任何大整数乘法算法的
+时间复杂度趋于 $\O(n^2)$ 这一猜测一周后 Karatsuba 就完成了上述更快算法的构造。具体的历史信息可参考 
+\href{https://en.wikipedia.org/wiki/Karatsuba_algorithm}{Wikipedia:Karatsuba Algorithm}。其中一段摘录如下
+
+\begin{quote}
+    In 1960, 
+    Kolmogorov organized a seminar on mathematical problems in cybernetics 
+    at the Moscow State University, where he stated the $\Omega (n^2)$ conjecture and other problems 
+    in the complexity of computation. Within a week, Karatsuba, then a 23-year-old student, found an
+     algorithm that multiplies two n-digit numbers in $\O (n^{\log_2 3})$ elementary steps, thus 
+    disproving the conjecture. Kolmogorov was very excited about the discovery; 
+    he communicated it at the next meeting of the seminar, which was then terminated. 
+    Kolmogorov gave some lectures on the Karatsuba result at conferences all over the world 
+    (see, for example, ``Proceedings of the International Congress of Mathematicians 1962'', 
+    pp. 351–356, and also ``6 Lectures delivered at the International Congress of Mathematicians 
+    in Stockholm, 1962'') and published the method in 1962, in the Proceedings of the USSR Academy 
+    of Sciences. The article had been written by Kolmogorov and contained two results on 
+    multiplication, Karatsuba's algorithm and a separate result by Yuri Ofman; it listed 
+    \textquotedbl A. Karatsuba and Yu. Ofman\textquotedbl as the authors. Karatsuba only became aware of the paper 
+    when he received the reprints from the publisher.
+\end{quote}
+
+更完整的第一手算法理论参考可见 Karatsuba 本人的综述 \cite{Karatsuba1995}。本项目使用其思想实现了针对滤波器乘法的版本如下，
+主要集成了 Karatsuba 算法实现了多项式乘法和卷积，最后再处理所有的进位问题。
+
+\subsection{\heiti{量化感知中的混合精度量化(Mixed Precision Quantization)}}
+
+此部分主要参考 \citetitle{Gholami2021} 的大量参考文献中实现的不同的量化感知技术。其中
+
+在神经
+
+在这篇文章中

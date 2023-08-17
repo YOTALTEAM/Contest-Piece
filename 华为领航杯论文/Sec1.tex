@@ -1,6 +1,6 @@
-\section{问题背景阐述}
+\section{\heiti{问题背景阐述}}
 
-\subsection{有限脉脉冲响应滤波器(Finite Impulse Response Filter, FIR Filter)}
+\subsection{\heiti{有限脉脉冲响应滤波器(Finite Impulse Response Filter, FIR Filter)}}
 
 工程上进行
 FIR 滤波器(FIR Filter,以下简称FIR或FIR滤波器)是非递归型滤波器的简称，全称是有限长单位脉冲响应滤波器
@@ -12,7 +12,7 @@ FIR 滤波器(FIR Filter,以下简称FIR或FIR滤波器)是非递归型滤波器
 
 
 
-\subsection{离散傅立叶变换及快速实现(Discrete/Fast Fourier Transformatioin, DFT/FFT)}
+\subsection{\heiti{离散傅立叶变换及快速实现(Discrete/Fast Fourier Transformatioin, DFT/FFT)}}
 
 如果采用上述一般形式的离散 Fourier 变换公式在硬件上进行运算，那么完成一次完整的 DFT 需要进行
 $\O (n^2)$ 次乘法和 $\O(n^2)$ 次加法。其中 $n$ 代表 DFT 变换器的阶数(或者滤波器的抽头数)
@@ -22,9 +22,27 @@ $\O (n^2)$ 次乘法和 $\O(n^2)$ 次加法。其中 $n$ 代表 DFT 变换器的
 大大加快原有离散 Fourier 变换的运算速度。本质上这一算法的理论框架已经被德国数学家 Carl Friedrich Gauss 于 19世纪初
 发现并证明，参见。
 
-\subsection{滤波器算法中的乘法器性能}
+\subsection{\heiti{滤波器算法中的乘法器性能}}
 
 
-\subsection{技术诉求}
+\subsection{\heiti{技术诉求}}
 
+针对华为领航杯应用数学大赛的难题``低功耗自适应 FIR 滤波器''有如下三个主要技术诉求。
+
+\begin{enumerate}
+    \item 诉求一：通过改变滤波器架构设计等办法，使得其硬件算法整体性能提升40\%。
+    \item 诉求二：指定位宽下引入近似乘法，实现乘法资源降低50\%，误差或信噪比(SNR)大于 $75 \mathrm{dBc}$
+            ；或者使用机器学习模型训练，使得其训练
+            性能基本无损($< 0.1 \mathrm{dB}$)
+    \item 诉求三：" 低位宽 " FIR 滤波器算法实现($< 6 \mathrm{bit}$)，并能够实现模型稳定校正且性能基本无损($< 0.1 \mathrm{dB}$)
+\end{enumerate}
+
+在本文第二部分经典方法复现中，三个子节将会依次详细论述本项目对上述三个诉求的经典解决方式。
+
+在第三部分``理论和算法''中本文将尽可能清晰地叙述项目中使用的关键算法理论，具体创新和优化的细节部分。
+
+在第四部分``实验数据及软硬件介绍''和第五部分``实验结果及主要结论''中本文将展示根据前三部分的算法理论实现的工程在仿真环境
+的测试数据以及指标比较。
+
+最后关于项目的复现以及移植，完整的源代码解释和运行环境信息全面呈现在附录一节。
 
