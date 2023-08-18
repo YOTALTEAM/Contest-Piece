@@ -6,13 +6,19 @@
 FIR 滤波器(FIR Filter,以下简称FIR或FIR滤波器)是非递归型滤波器的简称，全称是有限长单位脉冲响应滤波器
 (Finite Response Filter)。
 
-其中带有常数系数的
-如下图
+其中带有常数系数(或自适应系数)的数据流程图如下
+
+\paragraph{FIR 滤波器的架构优化}
+
+\paragraph{FIR 滤波器中的内存管理}
 
 
-
+对于更加详细的信号处理介绍(尤其是)
 
 \subsection{\heiti{离散傅立叶变换及快速实现(Discrete/Fast Fourier Transformatioin, DFT/FFT)}}
+
+滤波器实现了经典的 Cooley-Tukey 构造的快速傅立叶变换算法(Fast Fourier Transformatioin, FFT)。实现细节参考附录
+或\href{https://en.wikipedia.org/wiki/Cooley–Tukey_FFT_algorithm}{Wikipedia}。
 
 如果采用上述一般形式的离散 Fourier 变换公式在硬件上进行运算，那么完成一次完整的 DFT 需要进行
 $\O (n^2)$ 次乘法和 $\O(n^2)$ 次加法。其中 $n$ 代表 DFT 变换器的阶数(或者滤波器的抽头数)
@@ -24,6 +30,7 @@ $\O (n^2)$ 次乘法和 $\O(n^2)$ 次加法。其中 $n$ 代表 DFT 变换器的
 
 \subsection{\heiti{滤波器算法中的乘法器性能}}
 
+本项目同时采用了冗余计算理论(主要是近似位宽乘法)和 tooth 快乘提高 FIR Filter 中的乘法器性能。以下是简要说明
 
 \subsection{\heiti{技术诉求}}
 
@@ -36,6 +43,30 @@ $\O (n^2)$ 次乘法和 $\O(n^2)$ 次加法。其中 $n$ 代表 DFT 变换器的
             性能基本无损($< 0.1 \mathrm{dB}$)
     \item 诉求三：" 低位宽 " FIR 滤波器算法实现($< 6 \mathrm{bit}$)，并能够实现模型稳定校正且性能基本无损($< 0.1 \mathrm{dB}$)
 \end{enumerate}
+
+\paragraph{诉求一}
+
+就本团队理解。衡量 FIR 滤波器的整体性能指标可以使用如下的面积来确定。
+
+\paragraph{诉求二}
+
+利用 Shannon 信息熵计算公式，本项目通过基准测试方案在仿真机上对 FIR 滤波算法进行了...的测试
+
+通过比较。。。
+
+
+\paragraph{诉求三}
+
+通过理论计算。一般而言参考刘伟强等人的综述可知信噪比计算公式如下
+
+\begin{eqnarray*}
+    \mathrm{SNR} := 10 \log_{10} A/B
+\end{eqnarray*}
+
+经过如下的理论计算可知实现位宽的理论值应该为 $12 \mathrm{bit}$。
+通过更大量的 ``代价权衡'' 将滤波器的位宽降低到 $6 \mathrm{bit}$，本项目采用自适应机器学习预测的办法。此方式将会在论文第三部分
+详细论证
+
 
 在本文第二部分经典方法复现中，三个子节将会依次详细论述本项目对上述三个诉求的经典解决方式。
 
