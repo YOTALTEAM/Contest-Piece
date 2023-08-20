@@ -3,13 +3,20 @@
 
 %%% 宏
 \usepackage[headheight=127mm, left=2cm, right=2cm, bottom=2cm]{geometry}    % headheight过小不被允许故设置了一个下限
-% % \geometry{}	paper=a4paper, % Change to letterpaper for US letter
-% 	inner=2.5cm, % Inner margin
-% 	outer=3.8cm, % Outer margin
-% 	bindingoffset=.5cm, % Binding offset
-% 	top=1.5cm, % Top margin
-% 	bottom=1.5cm, % Bottom margin
-% 	%showframe, % Uncomment to show how the type block is set on the page
+\usepackage{subcaption}
+\usepackage{graphicx}
+% \usepackage{cite}
+\usepackage{setspace}
+\usepackage{multicol}            
+\usepackage{multirow} 
+% \usepackage{url}
+\usepackage{makecell}
+% \usepackage{enumitem}
+\usepackage{diagbox}
+\usepackage{stfloats}
+\usepackage{threeparttable}
+
+
 
 
 %%% 字体设置 %%%
@@ -21,18 +28,13 @@
 \setCJKmainfont{simsun.ttc}
 % \setCJKsansfont{}
 \setCJKmonofont{simfang.ttf}
-% \setCJKmainfont{方正书宋_GBK}
-% \setCJKsansfont{方正书宋_GBK}
-% 只有方正字体支持CJK脚本(CJK Script)
 \setCJKfamilyfont{zhhei}{simhei.ttf}[BoldFont=simhei.ttf, ItalicFont=fantasquesansmono-bolditalic.otf]
 \setCJKfamilyfont{zhyou}{FZY1K.TTF}[BoldFont=FZY1K.TTF, ItalicFont=FZY3K.TTF]
 \setCJKfamilyfont{方正楷体}{FZKTJW.TTF}
-% 由于为了使用上述CJK宏的主要字族/无衬线字族/有衬线字族
-% 字体需要确定到本地windows文件夹Fonts子文件夹的字体名称
-% LaTeX的字体逻辑 字族\字体\字形
-% 由于使用fontset=none的ctexart文类需要重新定义\heiti \songti \kaishu等命令
 \newcommand{\heiti}[1]{{\CJKfamily{zhhei}{#1}}}
 \newcommand{\youyuan}[1]{{\CJKfamily{zhyou}{#1}}}
+
+
 
 %%% 链接设置
 % 定义颜色
@@ -56,7 +58,8 @@
     hypertexnames=true,
 ]{hyperref}
 % 定理环境
-\usepackage{amsmath,amssymb,amsthm,amsfonts}
+\usepackage[fleqn]{amsmath}     %   公式左对齐
+\usepackage{amssymb,amsthm,amsfonts}
 \usepackage{mathtools}      % 数学符号美化
 \usepackage{tikz-cd}
 \usepackage{verbatim}       % 注释
@@ -67,6 +70,8 @@
 \newtheorem{corollary}{\youyuan{推论}}[theorem]
 \newtheorem{lemma}{\youyuan{引理}}[theorem]
 \newtheorem{definition}{$\blacksquare$ \,定义}[section]
+
+
 
 %%% 页眉页脚设置
 \usepackage{fancyhdr}
@@ -117,6 +122,8 @@
 }
 {\end{notebox}}
 
+
+
 %%% 参考文献配置
 \usepackage[backend=biber,backref=true,bibstyle=draft,citestyle=ext-authoryear]{biblatex}
 \DeclareOuterCiteDelims{cite}{\bibopenbracket}{\bibclosebracket}
@@ -128,7 +135,13 @@
 %%% 命令简化
 \renewcommand{\O}{\mathcal{O}}
 \renewcommand{\contentsname}{\heiti{论文目录}}  %   重新设置目录标题
-
+\newcommand{\C}{\mathbb{C}} %   复数
+\newcommand{\N}{\mathbb{N}}     %   自然数
+\newcommand{\R}{\mathbb{R}}     %   实数
+\newcommand{\Z}{\mathbb{Z}}     %   整数
+\def\x{{\mathbf x}}
+\def\L{{\cal L}}
+\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}    %   表
 
 
 %%% 文件树呈现
@@ -240,7 +253,7 @@ Wang Xiyuan in SMS,Fudan University}} % Your department's name and URL, this is 
     \vfill
     
     \large \textit{A thesis submitted in fulfillment of the requirements\\ for the \degreename Applied Mathematics Contest}\\[0.3cm] % University requirement text
-    \textit{in August 2023}\\[0.4cm]
+    \textit{Question Number 7 in August 2023}\\[0.4cm]
     \groupname \\ \deptname \\[2cm] % Research group name and department name
      
     \vfill
@@ -269,6 +282,10 @@ Wang Xiyuan in SMS,Fudan University}} % Your department's name and URL, this is 
 
 %   目录标题颜色
 {\color{DarkRed}\tableofcontents}
+
+\newpage
+
+\listoffigures
 
 \newpage
 

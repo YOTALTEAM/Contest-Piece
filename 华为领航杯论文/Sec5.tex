@@ -1,8 +1,58 @@
 \section{\heiti{实验结果及主要结论}}
 
+本部分主要展示我们团队的 FIR 滤波器算法测试数据。以下是和其他 IEEE 研究相比较的图表和结论。
+
 \subsection{\heiti{主要测试结果}}
 
+\begin{table*} [hbtp] \small
+    \caption{FFT-based FIR or Polynomial Multiplication Implementation Results and Comparison}
+    \label{tab:comp_ntt}
+    \centering
+    \resizebox{0.9\textwidth}{!}{
+        \begin{tabular}{ c|c|c|c|c|c||c|c|c|c }
+            \hline
+            \multirow{2}{*}{Work$^1$} & \multirow{2}{*}{\# LUTs} & \multirow{2}{*}{\# FFs} & \multirow{2}{*}{\# DSPs} & \multirow{2}{*}{\# BRAMs$^2$} & \multirow{2}{*}{\# Slices$^3$} & \multirow{1}{*}{Frequency} & Latency & Time & ATP\\
+            &  &  &  &  &  & \multirow{1}{*}{(MHz)} & ($cc$) & ($\mu s$) & (\# SEC$^4$ $\times$ $\mu s$) \\
+            \hline
+            \hline  
+            \citeyear[Chen]{Chen2021} & 533 & 514 & 1 & 1.5 & 198 $^*$ & 246 & 1030 & 4.18 & 2,499 \\
+            \hline
+            \citeyear[B,N]{BishehNiasar2021} & 360 & 145 & 3 & 2 & 187 & 115 & 940 & 9.32 & 8,267 \\
+            \hline
+            \citeyear[B,N]{BishehNiasar2021} & 737 & 290 & 6 & 4 & 371 & 115 & 474 & 4.68 & 8,288 \\
+            \hline
+            \citeyear[Guo]{Guo2021} & 1,549 & 788 & 4 & 2  $^5$ & 635 & 159 & 228 & 1.43 & 2,052 \\
+            \hline
+            \citeyear[Ma]{Ma2021} & 5,181 & 4,833 & 16 & 0 & 1,468 & 227 & 143 & 0.63 & 1,933 \\
+            \hline
+            \citeyear[Yarman]{Yarman2021}-1 & 948 & 352 & 1 & 2.5 & 281 $^*$ & 190 & 904 & 4.76 & 4,194 \\
+            \hline
+            \citeyear{Yarman2021}-4 & 2,543 & 792 & 4 & 9 & 735 $^*$ & 182 & 232 & 1.27 & 3,727 \\
+            \hline
+            \citeyear{Yarman2021}-16 & 9,508 & 2,684 & 16 & 35 & 2,713 $^*$ & 172 & 69 & 0.40 & 4,525 \\
+            \hline
+            \hline
+            \textbf{Ours} $N=64$ & 3,120 & 3.224 & 0 & 0 & 910 & 200 & 56 & 0.28 & 254.8 \\
+            \hline
+            \textbf{Ours} $N=128$ & 6,250 & 6,718 & 0 & 0 & 1,975 & 177 & 64 & 0.36 & 714.1\\
+            \hline
+            \textbf{Ours} $N=256$ & 13,447 & 14,002 & 0 & 0 & 4,122 & 162 & 72 & 0.44 & 1813.7\\
+            \hline
+            
+        \end{tabular}
+    }
+    \begin{tablenotes}
+        \item[1] 
+        ${^1}$ All of the related works evaluate their designs on Xilinx Artix-7.\\
+        ${^2}$ 36Kb BRAM slices.\\
+        ${^3}$ For works that do not provide \#Slices (marked by  $^*$), \#Slices is approximated by \#LUTs $\times$ 0.25 + \#FFs $\times$ 0.125 
+        \href{https://www.xilinx.com/content/dam/xilinx/support/documents/data_sheets/ds180_7Series_Overview.pdf}{xilinx7series}.\\
+        ${^4}$ \#SEC = \#BRAMs $\times$ 200 + \#DSPs $\times$ 100 + \#Slices.\\
+        ${^5}$ Number of BRAMs used during the polynomial multiplication.\\
+        \textbullet ``\textbf{Ours}'' stands for our team project performance.
+    \end{tablenotes}
+\end{table*}
 
 \subsection{\heiti{结论}}
 
-实现性能 $40 \% $ 的提升的结论。
+基本实现了第一部分的前两个技术诉求。目前本团队正努力实现第三个技术诉求。
